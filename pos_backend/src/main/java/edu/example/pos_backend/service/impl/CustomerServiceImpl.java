@@ -4,9 +4,12 @@ import edu.example.pos_backend.dto.CustomerDTO;
 import edu.example.pos_backend.entity.Customer;
 import edu.example.pos_backend.repository.CustomerRepo;
 import edu.example.pos_backend.service.CustomerService;
+import edu.example.pos_backend.util.APIResponse;
 import lombok.RequiredArgsConstructor;
 import org.modelmapper.ModelMapper;
 import org.modelmapper.TypeToken;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -19,8 +22,11 @@ public class CustomerServiceImpl implements CustomerService {
     private final ModelMapper modelMapper;
 
     @Override
-    public void saveCustomer(CustomerDTO customerDTO) {
+    public ResponseEntity<APIResponse<String>> saveCustomer(CustomerDTO customerDTO) {
         customerRepo.save(modelMapper.map(customerDTO, Customer.class));
+
+        return new ResponseEntity<>(new APIResponse<>(500,"internal server error",null), HttpStatus.INTERNAL_SERVER_ERROR);
+
     }
 
     @Override

@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css">
+    <script src="https://code.jquery.com/jquery-4.0.0.min.js" integrity="sha256-OaVG6prZf4v69dPg6PhVattBXkcOWQB62pdZ3ORyrao=" crossorigin="anonymous"></script>
+</head>
+<body style="text-align: center; padding: 50px;" class="bg-dark text-white">
+<h1>Order Management</h1>
+
+<div class="container p-3">
+    <input type="text" id="oId" placeholder="Order Id">
+    <input type="text" id="cId" placeholder="Customer Id">
+    <input type="text" id="iCode" placeholder="Item Code">
+    <input type="text" id="oQty" placeholder="Qty">
+</div>
+
+<div class="container p-3">
+    <button id="placeOrder" class="btn btn-primary" onclick="placeOrder()">Place Order</button>
+    <button id="getAllOrders" class="btn btn-succes" onclick="getAllOrders()">Get All Orders</button>
+</div>
+
+<div class="container p-3">
+    <table id="orderTable" class="table table-bordered">
+        <thead>
+        <tr>
+            <th>Order Id</th>
+            <th>Customer Id</th>
+            <th>Item Code</th>
+            <th>Qty</th>
+        </tr>
+        </thead>
+        <tbody>
+
+        </tbody>
+    </table>
+</div>
+<script src="../js/order.js"></script>
+</body>
+</html>

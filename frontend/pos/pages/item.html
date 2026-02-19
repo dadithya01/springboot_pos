@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css">
+    <script src="https://code.jquery.com/jquery-4.0.0.min.js" integrity="sha256-OaVG6prZf4v69dPg6PhVattBXkcOWQB62pdZ3ORyrao=" crossorigin="anonymous"></script>
+
+</head>
+<body style="text-align: center; padding: 50px;" class="bg-dark text-white">
+<div class="container">
+    <h1>Item Management</h1>
+</div>
+
+<div class="container p-3">
+    <input type="text" id="itemCode" placeholder="Item Code">
+    <input type="text" id="itemName" placeholder="Item Name">
+    <input type="text" id="itemPrice" placeholder="Item Price">
+    <input type="text" id="itemQty" placeholder="Item Qty">
+</div>
+
+<div class="container p-3">
+    <button id="addItem" class="btn btn-primary" onclick="saveItem()">Add Item</button>
+    <button id="updateItem" class="btn btn-secondary" onclick="updateItem()">Update Item</button>
+    <button id="deleteItem" class="btn btn-danger" onclick="deleteItem()">Delete Item</button>
+    <button id="getAllItem" class="btn btn-succes" onclick="getAllItem()">Get All</button>
+</div>
+
+<div class="container p-3">
+    <table id="itemTable" class="table table-bordered">
+        <thead>
+        <tr>
+            <th>Item Code</th>
+            <th>Item Name</th>
+            <th>Item Price</th>
+            <th>Item Qty</th>
+        </tr>
+        </thead>
+        <tbody>
+
+        </tbody>
+    </table>
+</div>
+<script src="../js/item.js"></script>
+</body>
+</html>

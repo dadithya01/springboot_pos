@@ -1,5 +1,6 @@
 package edu.example.pos_backend.dto;
 
+import jakarta.annotation.Nullable;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.Pattern;
 import jakarta.validation.constraints.Size;
@@ -12,6 +13,7 @@ import lombok.NoArgsConstructor;
 @Data
 public class CustomerDTO {
     @Pattern(regexp = "^\\d+$", message = "Customer ID must be a valid integer")
+    @Nullable
     private Long id;
 
     @NotBlank(message = "Customer name cannot be blank")

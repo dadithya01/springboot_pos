@@ -3,6 +3,7 @@ package edu.example.pos_backend.controller;
 import edu.example.pos_backend.dto.CustomerDTO;
 import edu.example.pos_backend.service.impl.CustomerServiceImpl;
 import edu.example.pos_backend.util.APIResponse;
+import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -22,6 +23,7 @@ public class CustomerController {
 
     @PostMapping
     public ResponseEntity<APIResponse<String>> saveCustomer(@RequestBody CustomerDTO customerDTO) {
+        System.out.println(customerDTO);
         customerServiceImpl.saveCustomer(customerDTO);
         return new ResponseEntity<>(new APIResponse<>(201, "Customer saved successfully", null), HttpStatus.CREATED);
     }
