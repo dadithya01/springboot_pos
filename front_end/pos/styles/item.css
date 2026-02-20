@@ -1,0 +1,30 @@
+body {
+            background:black;
+                                    color:white;
+        }
+
+        .card {
+            background: black;
+                        color: white;
+        }
+
+        .card .form-label {
+            color: white;
+                        font-weight: 600;
+        }
+
+
+
+        .btn {
+            border-radius: 20px;
+                        font-weight: 700;
+                        font-size: 25px;
+        }
+
+
+        .section-title {
+            font-weight: 900;
+                        letter-spacing: .2px;
+                        color: white;
+        }
+

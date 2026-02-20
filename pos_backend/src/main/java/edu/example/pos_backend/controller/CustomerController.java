@@ -1,7 +1,7 @@
 package edu.example.pos_backend.controller;
 
 import edu.example.pos_backend.dto.CustomerDTO;
-import edu.example.pos_backend.service.impl.CustomerServiceImpl;
+import edu.example.pos_backend.service.CustomerService;
 import edu.example.pos_backend.util.APIResponse;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
@@ -12,37 +12,90 @@ import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
-@RequestMapping("/api/v1/customers")
 @RestController
-@RequiredArgsConstructor
+@RequestMapping("/app/v1/customer")
 @CrossOrigin
+@RequiredArgsConstructor
 @Validated
 public class CustomerController {
 
-    private final CustomerServiceImpl customerServiceImpl;
+    private final CustomerService customerService;
+
 
     @PostMapping
-    public ResponseEntity<APIResponse<String>> saveCustomer(@RequestBody CustomerDTO customerDTO) {
-        System.out.println(customerDTO);
-        customerServiceImpl.saveCustomer(customerDTO);
-        return new ResponseEntity<>(new APIResponse<>(201, "Customer saved successfully", null), HttpStatus.CREATED);
+    public ResponseEntity<APIResponse<String>> saveCustomer(
+            @RequestBody @Valid CustomerDTO customerDTO) {
+
+        customerService.saveCustomer(customerDTO);
+
+        return ResponseEntity.status(HttpStatus.CREATED)
+                .body(new APIResponse<>(
+                        201,
+                        "Customer saved successfully",
+                        null
+                ));
     }
+
 
     @PutMapping
-    public ResponseEntity <APIResponse<String>> updateCustomer(@RequestBody CustomerDTO customerDTO) {
-        customerServiceImpl.updateCustomer(customerDTO);
-        return new ResponseEntity<>(new APIResponse<>(200, "Customer updated successfully", null), HttpStatus.OK);
+    public ResponseEntity<APIResponse<String>> updateCustomer(
+            @RequestBody @Valid CustomerDTO customerDTO) {
+
+        customerService.updateCustomer(customerDTO);
+
+        return ResponseEntity.ok(
+                new APIResponse<>(
+                        200,
+                        "Customer updated successfully",
+                        null
+                )
+        );
     }
 
-    @DeleteMapping("/{customerId}")
-    public ResponseEntity <APIResponse<String>> deleteCustomer(@PathVariable long customerId) {
-        customerServiceImpl.deleteCustomer(customerId);
-        return new ResponseEntity<>(new APIResponse<>(200, "Customer deleted successfully", null), HttpStatus.OK);
-    }
 
     @GetMapping
-    public ResponseEntity <APIResponse<List<CustomerDTO>>> getAllCustomers() {
-        List<CustomerDTO> customers = customerServiceImpl.getAllCustomer();
-        return new ResponseEntity<>(new APIResponse<>(200, "Customers retrieved successfully", customers), HttpStatus.OK);
+    public ResponseEntity<APIResponse<List<CustomerDTO>>> getAllCustomers() {
+
+        List<CustomerDTO> customers = customerService.getAllCustomers();
+
+        return ResponseEntity.ok(
+                new APIResponse<>(
+                        200,
+                        "Customer list fetched",
+                        customers
+                )
+        );
+    }
+
+
+    @GetMapping("/{id}")
+    public ResponseEntity<APIResponse<CustomerDTO>> getCustomer(
+            @PathVariable int id) {
+
+        CustomerDTO customer = customerService.getCustomer(id);
+
+        return ResponseEntity.ok(
+                new APIResponse<>(
+                        200,
+                        "Customer fetched",
+                        customer
+                )
+        );
+    }
+
+
+    @DeleteMapping("/{id}")
+    public ResponseEntity<APIResponse<String>> deleteCustomer(
+            @PathVariable int id) {
+
+        customerService.deleteCustomer(id);
+
+        return ResponseEntity.ok(
+                new APIResponse<>(
+                        200,
+                        "Customer deleted successfully",
+                        null
+                )
+        );
     }
 }

@@ -3,21 +3,18 @@ package edu.example.pos_backend.entity;
 import jakarta.persistence.*;
 import lombok.*;
 
+import java.time.LocalDate;
+
 @Entity
 @Getter @Setter
 @NoArgsConstructor @AllArgsConstructor
-public class OrderDetail {
+public class Orders {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long id;
-
+    private Integer orderId;
     @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "order_id")
-    private Orders order;
-    @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "item_id")
-    private Item item;
-    private int qty;
-    private double unitPrice;
+    private Customer customer;
+    private LocalDate orderDate;
+    private double total;
 }

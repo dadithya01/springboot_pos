@@ -1,19 +1,11 @@
 package edu.example.pos_backend.dto;
 
-import jakarta.validation.constraints.Pattern;
-import lombok.AllArgsConstructor;
-import lombok.Data;
-import lombok.NoArgsConstructor;
+import lombok.*;
 
-@AllArgsConstructor
-@NoArgsConstructor
-@Data
+@Getter @Setter
+@NoArgsConstructor @AllArgsConstructor
 public class OrderDetailDTO {
-    private Long itemId;
-
-    @Pattern(regexp = "\\d+" , message = "Quantity must be a valid integer")
+    private Integer itemId;
     private int qty;
-
-    @Pattern(regexp = "^[-+]?[0-9]*\\.?[0-9]+$ " , message = "Quantity must be a positive number")
     private double unitPrice;
 }

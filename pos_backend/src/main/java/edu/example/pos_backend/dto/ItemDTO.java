@@ -1,26 +1,41 @@
 package edu.example.pos_backend.dto;
 
-import jakarta.validation.constraints.NotBlank;
-import jakarta.validation.constraints.Pattern;
+import jakarta.annotation.Nullable;
+import jakarta.validation.constraints.*;
 import lombok.AllArgsConstructor;
-import lombok.Data;
+import lombok.Getter;
 import lombok.NoArgsConstructor;
+import lombok.Setter;
 
 @AllArgsConstructor
 @NoArgsConstructor
-@Data
+@Getter
+@Setter
 public class ItemDTO {
-    @Pattern(regexp = "^\\d+$", message = "Item ID must be a valid integer")
-    private Long id;
+    
+    @Nullable
+    private Integer id;
+    @NotBlank(message = "Item name is mandatory")
+    @Size(min = 3, max = 50, message = "Item name must be between 3 and 50 characters")
+    @Pattern(
+            regexp = "^[A-Za-z0-9 ]+$",
+            message = "Item name can contain only letters, numbers and spaces"
+    )
+    @NotBlank
+    private String name;
 
-    @NotBlank(message = "Item description cannot be blank")
-    private String description;
 
-    @NotBlank(message = "Item price cannot be blank")
-    @Pattern(regexp = "[+-]?(\\d+(\\.\\d*)?|\\.\\d+)([eE][+-]?\\d+)?" , message = "Invalid unit price")
-    private double unitPrice;
+    @Min(value = 0, message = "Quantity cannot be negative")
+    @NotNull
+    private Integer qty;
 
-    @Pattern(regexp = "^\\d+$", message = "Item qty must be a valid integer")
-    @NotBlank(message = "Item qty cannot be blank")
-    private int qtyOnHand;
+    @Positive(message = "Price must be greater than 0")
+    @NotNull @PositiveOrZero
+    private double price;
+
+
+
+
+
+
 }

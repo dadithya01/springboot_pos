@@ -1,7 +1,6 @@
 package edu.example.pos_backend.exception;
 
 import edu.example.pos_backend.util.APIResponse;
-import org.springframework.data.crossstore.ChangeSetPersister;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.MethodArgumentNotValidException;
@@ -10,46 +9,56 @@ import org.springframework.web.bind.annotation.RestControllerAdvice;
 
 import java.util.HashMap;
 import java.util.Map;
+import java.util.Objects;
 
 @RestControllerAdvice
 public class GlobalExceptionHandler {
+
     @ExceptionHandler(Exception.class)
-    public ResponseEntity<APIResponse<String>> handleGlobalException(Exception ex) {
-        return new ResponseEntity<>(new APIResponse<>(
-                HttpStatus.INTERNAL_SERVER_ERROR.value(),
-                "Internal server Error",
-                ex.getMessage()
-        ),HttpStatus.INTERNAL_SERVER_ERROR);
+    public ResponseEntity<APIResponse<String>> generalExceptionHandler(Exception e){
+       return new ResponseEntity<>(new APIResponse<>(
+               HttpStatus.INTERNAL_SERVER_ERROR.value(),
+               "internal server error",
+               null
+       ), HttpStatus.INTERNAL_SERVER_ERROR);
     }
 
     @ExceptionHandler(NullPointerException.class)
-    public ResponseEntity<APIResponse<String>> handleNullPointException(Exception ex) {
+    public ResponseEntity<APIResponse<String>> nullExceptionHandler(NullPointerException e){
         return new ResponseEntity<>(new APIResponse<>(
                 HttpStatus.BAD_REQUEST.value(),
-                "Null Values are Not Allowed",
-                ex.getMessage()
-        ),HttpStatus.BAD_REQUEST);
-    }
-
-    @ExceptionHandler(ChangeSetPersister.NotFoundException.class)
-    public ResponseEntity<APIResponse<String>> handleNotFoundException(ChangeSetPersister.NotFoundException ex) {
-        return new ResponseEntity<>(new APIResponse<>(
-                HttpStatus.NOT_FOUND.value(),
-                "Resource Not Found",
-                ex.getMessage()
-        ),HttpStatus.NOT_FOUND);
+                "null values are not allowed",
+                e.getMessage()
+        ), HttpStatus.BAD_REQUEST);
     }
 
     @ExceptionHandler(MethodArgumentNotValidException.class)
-    public ResponseEntity<APIResponse<Object>> handleMethodArgumentNotValidException(MethodArgumentNotValidException ex) {
-        Map<String , String> errors = new HashMap<>();
-        ex.getBindingResult().getAllErrors().forEach((error) -> {
-            errors.put(error.getDefaultMessage(), error.getCode());
+    public ResponseEntity<APIResponse<Map<String, String>>> handleValidation(
+            MethodArgumentNotValidException e) {
+
+        Map<String, String> errors = new HashMap<>();
+
+        e.getBindingResult().getFieldErrors().forEach(error -> {
+            errors.put(error.getField(), error.getDefaultMessage());
         });
-        return new ResponseEntity<>(new APIResponse<>(
-                HttpStatus.BAD_REQUEST.value(),
-                "Validation Error",
-                errors
-        ),HttpStatus.BAD_REQUEST);
+
+        return ResponseEntity.badRequest().body(
+                new APIResponse<>(
+                        HttpStatus.BAD_REQUEST.value(),
+                        "validation failed",
+                        errors
+                )
+        );
     }
+
+    @ExceptionHandler
+    public ResponseEntity<APIResponse<String>> badRequestExceptionHandler(BadRequestException e) {
+       return new ResponseEntity<>(new APIResponse<>(400, e.getMessage(), null), HttpStatus.BAD_REQUEST);
+    }
+
+    @ExceptionHandler
+    public ResponseEntity<APIResponse<String>> resourceNotFoundExceptionHandler(ResourceNotFoundException e) {
+        return new ResponseEntity<>(new APIResponse<>(404, e.getMessage(), null), HttpStatus.NOT_FOUND);
+    }
+
 }

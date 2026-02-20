@@ -1,25 +1,27 @@
 package edu.example.pos_backend.dto;
 
 import jakarta.annotation.Nullable;
-import jakarta.validation.constraints.NotBlank;
-import jakarta.validation.constraints.Pattern;
-import jakarta.validation.constraints.Size;
-import lombok.AllArgsConstructor;
-import lombok.Data;
-import lombok.NoArgsConstructor;
+import jakarta.validation.constraints.*;
+import lombok.*;
 
 @AllArgsConstructor
 @NoArgsConstructor
-@Data
+@Getter
+@Setter
 public class CustomerDTO {
-    @Pattern(regexp = "^\\d+$", message = "Customer ID must be a valid integer")
+
     @Nullable
-    private Long id;
+    private Integer cId;
 
-    @NotBlank(message = "Customer name cannot be blank")
-    private String name;
+    @NotBlank(message = "customer name is mandatory")
+    @Size(min = 3, max = 50, message = "customer name must be between 3 and 50 characters")
+    @Pattern(
+            regexp = "^[A-Za-z ]+$",
+            message = "customer name must contain only letters and spaces"
+    )
+    private String cName;
 
-    @NotBlank(message = "Customer address cannot be blank")
-    @Size(min=10 , message = "Customer address should be at least 10 characters long")
-    private String address;
+    @NotBlank(message = "customer address is mandatory")
+    @Size(min = 10, max = 100, message = "address must be between 10 and 100 characters")
+    private String cAddress;
 }

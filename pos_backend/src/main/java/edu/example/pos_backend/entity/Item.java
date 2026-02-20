@@ -1,24 +1,24 @@
 package edu.example.pos_backend.entity;
 
-import jakarta.persistence.*;
+import jakarta.persistence.Entity;
+import jakarta.persistence.GeneratedValue;
+import jakarta.persistence.GenerationType;
+import jakarta.persistence.Id;
 import lombok.AllArgsConstructor;
-import lombok.Data;
+import lombok.Getter;
 import lombok.NoArgsConstructor;
-
-import java.util.List;
+import lombok.Setter;
 
 @Entity
-@Data
-@NoArgsConstructor
 @AllArgsConstructor
+@NoArgsConstructor
+@Getter
+@Setter
 public class Item {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long id;
-    private String description;
-    private double unitPrice;
-    private int qtyOnHand;
-
-    @OneToMany(mappedBy = "item", cascade = CascadeType.ALL)
-    private List<OrderDetail> orderDetails;
+    private Integer id;
+    private String name;
+    private int qty;
+    private double price;
 }
